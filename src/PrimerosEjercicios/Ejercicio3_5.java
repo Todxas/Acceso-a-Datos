@@ -1,3 +1,5 @@
+package PrimerosEjercicios;
+
 import java.io.File;
 
 public class Ejercicio3_5 {
