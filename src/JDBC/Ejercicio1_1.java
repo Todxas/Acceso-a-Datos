@@ -17,19 +17,30 @@ public class Ejercicio1_1 {
             Statement st = conexion.createStatement();
             st.executeUpdate("DROP TABLE IF EXISTS ArtFab");
 
-            String codigo = "CREATE TABLE ArtFab AS" +
-                    "SELECT a.nombre AS articulo," +
-                    "   f.nombre AS fabricante," +
-                    "   a.precio," +
-                    "   CASE" +
-                    "       WHEN a.precio < 200 THEN a.precio * 0.10" +
-                    "       WHEN a.precio < 500 THEN a.precio * 0.08" +
-                    "       WHEN a.precio < 700 THEN a.precio * 0.06" +
-                    "       ELSE a.precio" +
-                    "   END AS iva" +
-                    "FROM articulo a" +
-                    "JOIN fabricante f" +
-                    "ON a.codigo_fabricante = f.codigo";
+            String codigo = "CREATE TABLE ArtFab AS " +
+                    "SELECT a.nombre AS articulo, " +
+                    "   f.nombre AS fabricante, " +
+                    "   a.precio, " +
+                    "   CASE " +
+                    "       WHEN a.precio < 200 THEN a.precio * 0.10 " +
+                    "       WHEN a.precio < 500 THEN a.precio * 0.08 " +
+                    "       WHEN a.precio < 700 THEN a.precio * 0.06 " +
+                    "       ELSE a.precio " +
+                    "   END AS iva " +
+                    "FROM articulos a " +
+                    "JOIN fabricantes f " +
+                    "ON a.CLFAB = f.CLFAB ";
+            st.executeUpdate(codigo);
+            ResultSet rs = st.executeQuery("SELECT * FROM ArtFab");
+            while (rs.next()) {
+                System.out.println(
+                        rs.getString("articulo") + " | " +
+                                rs.getString("fabricante") + " | " +
+                                rs.getDouble("precio") + " | " +
+                                rs.getDouble("iva")
+                );
+            }
+            conexion.close();
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
